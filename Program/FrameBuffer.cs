@@ -52,6 +52,28 @@ namespace Program
         public uint Reserved3;
     };
 
+    [StructLayout(LayoutKind.Sequential, Size=160)]
+    public struct FrameBufferFixedScreenInfo
+    {
+        [MarshalAs(UnmanagedType.LPStr, SizeConst=16)]
+        public string Id;
+        public uint SMemStart;
+        public uint SMemLength;
+        public uint Type;
+        public uint TypeAux;
+        public uint Visual;
+        public ushort XPanStep;
+        public ushort YPanStep;
+        public ushort YWrapStep;
+        public uint LineLength;
+        public uint MMIOStart;
+        public uint MMIOLength;
+        public uint Accel;
+        public ushort Capabilities;
+        public ushort Reserved1;
+        public ushort Reserved2;
+    }
+
     public class FrameBuffer : IDisposable
     {
         internal const int OPEN_READ_WRITE = 2; // constant, even for different devices
@@ -83,6 +105,9 @@ namespace Program
         const int FB_TYPE_VGA_PLANES = 4;	/* EGA/VGA planes	*/
         const int FB_TYPE_FOURCC = 5;	/* Type identified by a V4L2 FOURCC */
 
+        FrameBufferVarScreenInfo FrameBufferInfo = new FrameBufferVarScreenInfo();
+        FrameBufferFixedScreenInfo FrameBufferFixedInfo = new FrameBufferFixedScreenInfo();
+
         public FrameBuffer()
         {
             
@@ -93,21 +118,51 @@ namespace Program
 
                 Console.WriteLine("Error code is {0}", errno);
             } else {
-                var frameBufferInfo = new FrameBufferVarScreenInfo();
-                var buffer = new byte[160];
                 Console.WriteLine("Getting framebuffer info");
-                var result = UnsafeNativeMethods.Ioctl(fb0Handle, FBIOGET_VSCREENINFO, ref frameBufferInfo);
+                var result = UnsafeNativeMethods.FrameBufferVarScreenInfoIoctl(fb0Handle, FBIOGET_VSCREENINFO, ref FrameBufferInfo);
                 if(result < 0) {
                     throw new UnixIOException();
                 } else {
-                    Console.WriteLine($"Frame buffer resolution: {frameBufferInfo.XResolution}x{frameBufferInfo.YResolution}");
+                    Console.WriteLine($"Frame buffer resolution: {FrameBufferInfo.XResolution}x{FrameBufferInfo.YResolution}");
+                }
+
+                result = UnsafeNativeMethods.FrameBufferFixedScreenInfoIoctl(fb0Handle, FBIOGET_FSCREENINFO, ref FrameBufferFixedInfo);
+                if(result < 0) {
+                    throw new UnixIOException();
+                } else {
+                    Console.WriteLine($"Frame buffer line length: {FrameBufferFixedInfo.LineLength}");
                 }
 
                 Console.WriteLine("Closing device /dev/fb0");
                 fb0Handle.Close();
+
+
             }
         }
-
+        
+        // void PutPixel(int x, int y, int r, int g, int b)
+        // {
+        //     var location =
+        //         (x + FrameBufferInfo.XOffset) *
+        //         (FrameBufferInfo.BitsPerPixel/8) +
+        //         (y + FrameBufferInfo.YOffset) *
+        //         (F)
+        //     location = (x+vinfo.xoffset) * (vinfo.bits_per_pixel/8) +
+        //                     (y+vinfo.yoffset) * finfo.line_length;
+        
+        //     if (vinfo.bits_per_pixel == 32)
+        //     {
+        //         *(fbp + location) = b;        // Some blue
+        //         *(fbp + location + 1) = g;     // A little green
+        //         *(fbp + location + 2) = r;    // A lot of red
+        //         *(fbp + location + 3) = 0;      // No transparency
+        //     }
+        //     else
+        //     { //assume 16bpp
+        //         unsigned short int t = r<<11 | g << 5 | b;
+        //         *((unsigned short int*)(fbp + location)) = t;
+        //     }
+        // }
         public void Dispose()
         {
         }
