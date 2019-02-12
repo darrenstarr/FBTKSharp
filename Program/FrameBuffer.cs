@@ -3,6 +3,7 @@
 namespace Program
 {
     using System;
+    using System.Linq;
     using System.Runtime.ConstrainedExecution;
     using System.Runtime.InteropServices;
 
@@ -65,28 +66,6 @@ namespace Program
 
     public class FrameBuffer : IDisposable
     {
-        // [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
-        // [DllImport("libc", EntryPoint = "close", SetLastError = true)]
-        // internal static extern int Close(IntPtr handle);
-
-        // [DllImport("libc", EntryPoint = "ioctl", SetLastError = true)]
-        // internal static extern int Ioctl(SafeUnixHandle handle, uint request, ref Capability capability);
-
-        // [DllImport("libc", EntryPoint = "open", SetLastError = true)]
-        // internal static extern SafeUnixHandle Open(string path, uint flag, int mode);
-
-        // [DllImport("libc.so.6", EntryPoint = "open", SetLastError = true )]
-        // public static extern int Open(string fileName, int mode);
-        
-        // [DllImport("libc.so.6", EntryPoint = "close", SetLastError = true)]
-        // public static extern int Close(int fd);
-
-        // [DllImport("libc.so.6", EntryPoint = "ioctl", SetLastError = true)]
-        // private extern static int FrameBufferIoctl(int fd, int request, ref FrameBufferVarScreenInfo screenInfo);
-        
-        // [DllImport("libc.so.6", EntryPoint = "read", SetLastError = true)]
-        // internal static extern int Read(int handle, byte[] data, int length);
-
         internal const int OPEN_READ_WRITE = 2; // constant, even for different devices
 
         const int FBIOGET_VSCREENINFO = 0x4600;
@@ -127,12 +106,15 @@ namespace Program
                 Console.WriteLine("Error code is {0}", errno);
             } else {
                 var frameBufferInfo = new FrameBufferVarScreenInfo();
+                var buffer = new byte[160];
                 Console.WriteLine("Getting framebuffer info");
-                var result = UnsafeNativeMethods.Ioctl(fb0Handle, FBIOPUT_VSCREENINFO, ref frameBufferInfo);
+                //var result = UnsafeNativeMethods.Ioctl(fb0Handle, FBIOPUT_VSCREENINFO, ref frameBufferInfo);
+                var result = UnsafeNativeMethods.Ioctl(fb0Handle, FBIOPUT_VSCREENINFO, ref buffer);
                 if(result < 0) {
                     throw new UnixIOException();
                 } else {
-                    Console.WriteLine($"Frame buffer resolution: {frameBufferInfo.XResolution}x{frameBufferInfo.YResolution}");
+                    //Console.WriteLine($"Frame buffer resolution: {frameBufferInfo.XResolution}x{frameBufferInfo.YResolution}");
+                    Console.WriteLine(string.Join(", ", buffer.Select(b => b.ToString("X2"));
                 }
 
                 Console.WriteLine("Closing device /dev/fb0");
