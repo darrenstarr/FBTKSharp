@@ -103,9 +103,10 @@ namespace Program
             } else {
                 var frameBufferInfo = new FrameBufferVarScreenInfo();
                 Console.WriteLine("Getting framebuffer info");
-                var error = FrameBufferIoctl(fb0Handle, FBIOPUT_VSCREENINFO, ref frameBufferInfo);
-                if(error < 0) {
-                    Console.WriteLine("Failed to get frame buffer info");
+                var result = FrameBufferIoctl(fb0Handle, FBIOPUT_VSCREENINFO, ref frameBufferInfo);
+                if(result < 0) {
+                    Console.WriteLine($"Failed to get frame buffer info {result}");
+                    Console.WriteLine("Error code is {0}", Marshal.GetLastWin32Error());
                 } else {
                     Console.WriteLine($"Frame buffer resolution: {frameBufferInfo.XResolution}x{frameBufferInfo.YResolution}");
                 }
