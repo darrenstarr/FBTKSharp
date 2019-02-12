@@ -52,7 +52,7 @@ namespace Program
         public uint Reserved3;
     };
 
-    [StructLayout(LayoutKind.Sequential, Size=160)]
+    [StructLayout(LayoutKind.Sequential, Size=80)]
     public struct FrameBufferFixedScreenInfo
     {
         [MarshalAs(UnmanagedType.LPStr, SizeConst=16)]
