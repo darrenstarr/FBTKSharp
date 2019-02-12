@@ -14,7 +14,7 @@ namespace Program
         public UInt32 MsbRight;
     }
 
-    [StructLayout(LayoutKind.Sequential)]
+    [StructLayout(LayoutKind.Sequential, Size=160)]
     public struct FrameBufferVarScreenInfo
     {
         public uint XResolution;
@@ -25,10 +25,22 @@ namespace Program
         public uint YOffset;
         public uint BitsPerPixel;
         public uint GrayScale;
-        public FrameBufferBitField Red;
-        public FrameBufferBitField Green;
-        public FrameBufferBitField Blue;
-        public FrameBufferBitField Transparent;
+        // public FrameBufferBitField Red;
+        // public FrameBufferBitField Green;
+        // public FrameBufferBitField Blue;
+        // public FrameBufferBitField Transparent;
+        public UInt32 rOffset;
+        public UInt32 rLength;
+        public UInt32 rMsbRight;
+        public UInt32 gOffset;
+        public UInt32 gLength;
+        public UInt32 gMsbRight;
+        public UInt32 bOffset;
+        public UInt32 bLength;
+        public UInt32 bMsbRight;
+        public UInt32 tOffset;
+        public UInt32 tLength;
+        public UInt32 tMsbRight;
         public uint NonStandard;
         public uint Activate;
         public uint Height;
