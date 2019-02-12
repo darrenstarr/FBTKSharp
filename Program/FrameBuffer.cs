@@ -98,6 +98,8 @@ namespace Program
             var fb0Handle = Open("/dev/i2c-1", OPEN_READ_WRITE);
             if(fb0Handle == -1) {
                 Console.WriteLine("Failed to open /dev/fb0 for read and write");
+
+                Console.WriteLine("Error code is {0}", Marshal.GetLastWin32Error());
             } else {
                 var frameBufferInfo = new FrameBufferVarScreenInfo();
                 Console.WriteLine("Getting framebuffer info");
