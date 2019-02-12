@@ -114,7 +114,7 @@ namespace Program
                     throw new UnixIOException();
                 } else {
                     //Console.WriteLine($"Frame buffer resolution: {frameBufferInfo.XResolution}x{frameBufferInfo.YResolution}");
-                    Console.WriteLine(string.Join(", ", buffer.Select(b => b.ToString("X2"));
+                    Console.WriteLine(string.Join(", ", buffer.Select(b => b.ToString("X2")));
                 }
 
                 Console.WriteLine("Closing device /dev/fb0");
