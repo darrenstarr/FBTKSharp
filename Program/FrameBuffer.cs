@@ -96,7 +96,7 @@ namespace Program
         public FrameBuffer()
         {
             
-            var fb0Handle = Open("/dev/i2c-1", OPEN_READ_WRITE);
+            var fb0Handle = Open("/dev/fb0", OPEN_READ_WRITE);
             if(fb0Handle < 0) {
                 var errno = System.Runtime.InteropServices.Marshal.GetLastWin32Error();
                 Console.WriteLine($"Failed to open /dev/fb0 for read and write {fb0Handle}");
