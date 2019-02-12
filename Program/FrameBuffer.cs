@@ -108,7 +108,7 @@ namespace Program
                 var frameBufferInfo = new FrameBufferVarScreenInfo();
                 var buffer = new byte[160];
                 Console.WriteLine("Getting framebuffer info");
-                var result = UnsafeNativeMethods.Ioctl(fb0Handle, FBIOPUT_VSCREENINFO, ref frameBufferInfo);
+                var result = UnsafeNativeMethods.Ioctl(fb0Handle, FBIOGET_VSCREENINFO, ref frameBufferInfo);
                 if(result < 0) {
                     throw new UnixIOException();
                 } else {
