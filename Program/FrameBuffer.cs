@@ -126,6 +126,7 @@ namespace Program
                     Console.WriteLine($"Frame buffer resolution: {FrameBufferInfo.XResolution}x{FrameBufferInfo.YResolution}");
                 }
 
+                Console.WriteLine("Getting fixed framebuffer info");
                 result = UnsafeNativeMethods.FrameBufferFixedScreenInfoIoctl(fb0Handle, FBIOGET_FSCREENINFO, ref FrameBufferFixedInfo);
                 if(result < 0) {
                     throw new UnixIOException();
