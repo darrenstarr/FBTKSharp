@@ -107,8 +107,9 @@ namespace Program
                 Console.WriteLine("Getting framebuffer info");
                 var result = FrameBufferIoctl(fb0Handle, FBIOPUT_VSCREENINFO, ref frameBufferInfo);
                 if(result < 0) {
+                    var errno = System.Runtime.InteropServices.Marshal.GetLastWin32Error();
                     Console.WriteLine($"Failed to get frame buffer info {result}");
-                    Console.WriteLine("Error code is {0}", Marshal.GetLastWin32Error());
+                    Console.WriteLine($"Error code is {errno}");
                 } else {
                     Console.WriteLine($"Frame buffer resolution: {frameBufferInfo.XResolution}x{frameBufferInfo.YResolution}");
                 }
