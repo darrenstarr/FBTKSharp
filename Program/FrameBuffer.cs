@@ -3,6 +3,7 @@
 namespace Program
 {
     using System;
+    using System.Runtime.ConstrainedExecution;
     using System.Runtime.InteropServices;
 
     [StructLayout(LayoutKind.Sequential)]
@@ -52,17 +53,27 @@ namespace Program
 
     public class FrameBuffer : IDisposable
     {
-        [DllImport("libc.so.6", EntryPoint = "open", SetLastError = true )]
-        public static extern int Open(string fileName, int mode);
-        
-        [DllImport("libc.so.6", EntryPoint = "close", SetLastError = true)]
-        public static extern int Close(int fd);
+        // [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
+        // [DllImport("libc", EntryPoint = "close", SetLastError = true)]
+        // internal static extern int Close(IntPtr handle);
 
-        [DllImport("libc.so.6", EntryPoint = "ioctl", SetLastError = true)]
-        private extern static int FrameBufferIoctl(int fd, int request, ref FrameBufferVarScreenInfo screenInfo);
+        // [DllImport("libc", EntryPoint = "ioctl", SetLastError = true)]
+        // internal static extern int Ioctl(SafeUnixHandle handle, uint request, ref Capability capability);
+
+        // [DllImport("libc", EntryPoint = "open", SetLastError = true)]
+        // internal static extern SafeUnixHandle Open(string path, uint flag, int mode);
+
+        // [DllImport("libc.so.6", EntryPoint = "open", SetLastError = true )]
+        // public static extern int Open(string fileName, int mode);
         
-        [DllImport("libc.so.6", EntryPoint = "read", SetLastError = true)]
-        internal static extern int Read(int handle, byte[] data, int length);
+        // [DllImport("libc.so.6", EntryPoint = "close", SetLastError = true)]
+        // public static extern int Close(int fd);
+
+        // [DllImport("libc.so.6", EntryPoint = "ioctl", SetLastError = true)]
+        // private extern static int FrameBufferIoctl(int fd, int request, ref FrameBufferVarScreenInfo screenInfo);
+        
+        // [DllImport("libc.so.6", EntryPoint = "read", SetLastError = true)]
+        // internal static extern int Read(int handle, byte[] data, int length);
 
         internal const int OPEN_READ_WRITE = 2; // constant, even for different devices
 
@@ -96,8 +107,8 @@ namespace Program
         public FrameBuffer()
         {
             
-            var fb0Handle = Open("/dev/fb0", OPEN_READ_WRITE);
-            if(fb0Handle < 0) {
+            var fb0Handle = UnsafeNativeMethods.Open("/dev/fb0", OPEN_READ_WRITE);
+            if(fb0Handle.IsInvalid) {
                 var errno = System.Runtime.InteropServices.Marshal.GetLastWin32Error();
                 Console.WriteLine($"Failed to open /dev/fb0 for read and write {fb0Handle}");
 
@@ -105,17 +116,15 @@ namespace Program
             } else {
                 var frameBufferInfo = new FrameBufferVarScreenInfo();
                 Console.WriteLine("Getting framebuffer info");
-                var result = FrameBufferIoctl(fb0Handle, FBIOPUT_VSCREENINFO, ref frameBufferInfo);
+                var result = UnsafeNativeMethods.Ioctl(fb0Handle, FBIOPUT_VSCREENINFO, ref frameBufferInfo);
                 if(result < 0) {
-                    var errno = System.Runtime.InteropServices.Marshal.GetLastWin32Error();
-                    Console.WriteLine($"Failed to get frame buffer info {result}");
-                    Console.WriteLine($"Error code is {errno}");
+                    throw new UnixIOException();
                 } else {
                     Console.WriteLine($"Frame buffer resolution: {frameBufferInfo.XResolution}x{frameBufferInfo.YResolution}");
                 }
 
                 Console.WriteLine("Closing device /dev/fb0");
-                Close(fb0Handle);
+                fb0Handle.Close();
             }
         }
 
