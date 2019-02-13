@@ -11,6 +11,9 @@ namespace LinuxFrameBuffer
     {
         public string DeviceName { get; private set; }
 
+        public int ScreenWidth { get; private set; }
+        public int ScreenHeight { get; private set; }
+
         internal const int OPEN_READ_WRITE = 2; // constant, even for different devices
         FrameBufferVarScreenInfo FrameBufferInfo = new FrameBufferVarScreenInfo();
         FrameBufferFixedScreenInfo FrameBufferFixedInfo = new FrameBufferFixedScreenInfo();
@@ -35,7 +38,9 @@ namespace LinuxFrameBuffer
             if(result < 0) {
                 throw new UnixIOException();
             } 
-            
+
+            ScreenWidth = FrameBufferInfo.XResolution;            
+            ScreenHeight = FrameBufferInfo.YResolution;            
             System.Diagnostics.Debug.WriteLine($"Frame buffer resolution: {FrameBufferInfo.XResolution}x{FrameBufferInfo.YResolution}");
 
             System.Diagnostics.Debug.WriteLine("Getting fixed framebuffer info");
