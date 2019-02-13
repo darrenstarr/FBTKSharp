@@ -180,19 +180,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\submu\\.nuget\\packages\\": {}
+    "/home/darren/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Development\\FBTKSharp\\modules\\LinuxFrameBuffer\\LinuxFrameBuffer.csproj",
+      "projectUniqueName": "/home/darren/Work/FBTKSharp/Modules/LinuxFrameBuffer/LinuxFrameBuffer.csproj",
       "projectName": "LinuxFrameBuffer",
-      "projectPath": "C:\\Development\\FBTKSharp\\modules\\LinuxFrameBuffer\\LinuxFrameBuffer.csproj",
-      "packagesPath": "C:\\Users\\submu\\.nuget\\packages\\",
-      "outputPath": "C:\\Development\\FBTKSharp\\modules\\LinuxFrameBuffer\\obj\\",
+      "projectPath": "/home/darren/Work/FBTKSharp/Modules/LinuxFrameBuffer/LinuxFrameBuffer.csproj",
+      "packagesPath": "/home/darren/.nuget/packages/",
+      "outputPath": "/home/darren/Work/FBTKSharp/Modules/LinuxFrameBuffer/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\submu\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "/home/darren/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "netstandard2.0"

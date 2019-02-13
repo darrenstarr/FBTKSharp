@@ -65,13 +65,23 @@
           "build/netstandard2.0/_._": {}
         }
       },
-      "runtime.win-x64.Microsoft.NETCore.DotNetAppHost/3.0.0-preview-27324-5": {
+      "runtime.linux-x64.Microsoft.NETCore.DotNetAppHost/3.0.0-preview-27324-5": {
         "type": "package",
         "runtimeTargets": {
-          "runtimes/win-x64/native/_._": {
+          "runtimes/linux-x64/native/_._": {
             "assetType": "native",
-            "rid": "win-x64"
+            "rid": "linux-x64"
           }
+        }
+      },
+      "LinuxFrameBuffer/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "compile": {
+          "bin/placeholder/LinuxFrameBuffer.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/LinuxFrameBuffer.dll": {}
         }
       }
     }
@@ -347,7 +357,7 @@
       ]
     },
     "Microsoft.NETCore.DotNetAppHost/3.0.0-preview-27324-5": {
-      "sha512": "s4HKC5i+K2Y0yKcN/9Cjfno4DArL3/ukBw0kLnPytPAc8ZZB7h07YbMjAD4lBrjEo8LFDV32v82IMtk7O7tA5Q==",
+      "sha512": "4p/N2eD5grkUzIX7SqlFKSxStNBbubrSUxViU5CPto0bll0dchiRd4KDeTUsMXRNCpQ+dgsOlBsVuDArqNV7iA==",
       "type": "package",
       "path": "microsoft.netcore.dotnetapphost/3.0.0-preview-27324-5",
       "files": [
@@ -361,7 +371,7 @@
       ]
     },
     "Microsoft.NETCore.DotNetHostPolicy/3.0.0-preview-27324-5": {
-      "sha512": "7qpdSUtvOlDiOnhObFoLfBKyZNNRU0f+8W99dQOVF4Lzg9km8Tyrkfp+4CpXNuCB2YsjhsdRrjXAkWoWosTFhw==",
+      "sha512": "ilnuuld3A0gQ3/K5XcxRSCmBUbYZYyS2h3Sz+QCw9NC27VvPQjpJGiuABv/ftc1UWQGx7yaAiIWFC/t3ac2t9Q==",
       "type": "package",
       "path": "microsoft.netcore.dotnethostpolicy/3.0.0-preview-27324-5",
       "files": [
@@ -375,7 +385,7 @@
       ]
     },
     "Microsoft.NETCore.DotNetHostResolver/3.0.0-preview-27324-5": {
-      "sha512": "RTRtucGLa5xzF4oK9DmarQL3cphb0etcMoO3J0kkzybQhJXM2iDeSGmWXeJ57QUa7RpFUyaLBICkAxFiAM2Nng==",
+      "sha512": "X0vr5VuebmLCQPRL3jbZa0h2B9OhIW/yh39jwMTSOy3u54/Chse/LiAJjZF5L7R0DDXhy3mXb1PHYQiNokij1A==",
       "type": "package",
       "path": "microsoft.netcore.dotnethostresolver/3.0.0-preview-27324-5",
       "files": [
@@ -550,43 +560,49 @@
         "netstandard.library.nuspec"
       ]
     },
-    "runtime.win-x64.Microsoft.NETCore.DotNetAppHost/3.0.0-preview-27324-5": {
-      "sha512": "fEiegQMYHxXN0XLNMDEbQ5JgeBTjKrWLWINvyZe1ZM8xxou4l3r94dtqZPYczk/yuJY4GRWe1Ch9jj+Rw2Edqw==",
+    "runtime.linux-x64.Microsoft.NETCore.DotNetAppHost/3.0.0-preview-27324-5": {
+      "sha512": "AdTmqzQUzztVIAqTf1Mjgx8NMPUxqY0saB+OSQfmBMbQOG0bIEsqH6yzATDDkizmv4RIq4rvJszx7FH+Y9TzDA==",
       "type": "package",
-      "path": "runtime.win-x64.microsoft.netcore.dotnetapphost/3.0.0-preview-27324-5",
+      "path": "runtime.linux-x64.microsoft.netcore.dotnetapphost/3.0.0-preview-27324-5",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "LICENSE.TXT",
         "THIRD-PARTY-NOTICES.TXT",
-        "runtime.win-x64.microsoft.netcore.dotnetapphost.3.0.0-preview-27324-5.nupkg.sha512",
-        "runtime.win-x64.microsoft.netcore.dotnetapphost.nuspec",
-        "runtimes/win-x64/native/apphost.exe",
+        "runtime.linux-x64.microsoft.netcore.dotnetapphost.3.0.0-preview-27324-5.nupkg.sha512",
+        "runtime.linux-x64.microsoft.netcore.dotnetapphost.nuspec",
+        "runtimes/linux-x64/native/apphost",
         "version.txt"
       ]
+    },
+    "LinuxFrameBuffer/1.0.0": {
+      "type": "project",
+      "path": "../Modules/LinuxFrameBuffer/LinuxFrameBuffer.csproj",
+      "msbuildProject": "../Modules/LinuxFrameBuffer/LinuxFrameBuffer.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.0": [
+      "LinuxFrameBuffer >= 1.0.0",
       "Microsoft.NETCore.App >= 3.0.0-preview-27324-5",
       "Microsoft.NETCore.Platforms >= 3.0.0-preview.19073.11",
-      "runtime.win-x64.Microsoft.NETCore.DotNetAppHost >= 3.0.0-preview-27324-5"
+      "runtime.linux-x64.Microsoft.NETCore.DotNetAppHost >= 3.0.0-preview-27324-5"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\submu\\.nuget\\packages\\": {}
+    "/home/darren/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Development\\FBTKSharp\\Program\\Program.csproj",
+      "projectUniqueName": "/home/darren/Work/FBTKSharp/Program/Program.csproj",
       "projectName": "Program",
-      "projectPath": "C:\\Development\\FBTKSharp\\Program\\Program.csproj",
-      "packagesPath": "C:\\Users\\submu\\.nuget\\packages\\",
-      "outputPath": "C:\\Development\\FBTKSharp\\Program\\obj\\",
+      "projectPath": "/home/darren/Work/FBTKSharp/Program/Program.csproj",
+      "packagesPath": "/home/darren/.nuget/packages/",
+      "outputPath": "/home/darren/Work/FBTKSharp/Program/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\submu\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "/home/darren/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.0"
@@ -599,7 +615,11 @@
       },
       "frameworks": {
         "netcoreapp3.0": {
-          "projectReferences": {}
+          "projectReferences": {
+            "/home/darren/Work/FBTKSharp/Modules/LinuxFrameBuffer/LinuxFrameBuffer.csproj": {
+              "projectPath": "/home/darren/Work/FBTKSharp/Modules/LinuxFrameBuffer/LinuxFrameBuffer.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
@@ -623,7 +643,7 @@
             "version": "[3.0.0-preview.19073.11, )",
             "autoReferenced": true
           },
-          "runtime.win-x64.Microsoft.NETCore.DotNetAppHost": {
+          "runtime.linux-x64.Microsoft.NETCore.DotNetAppHost": {
             "include": "None",
             "suppressParent": "All",
             "target": "Package",

@@ -1,4 +1,4 @@
-namespace Program
+namespace LinuxFrameBuffer
 {
     using System;
     using System.Runtime.ConstrainedExecution;
@@ -19,6 +19,12 @@ namespace Program
 
         [DllImport("libc", EntryPoint = "open", SetLastError = true)]
         internal static extern SafeUnixHandle Open(string path, uint flag);
+
+        [DllImport("libc", EntryPoint = "mmap", SetLastError = true)]
+        internal static extern IntPtr MMap(IntPtr address, ulong length, int prot, int flags, SafeUnixHandle handle, ulong offset);
+
+        [DllImport("libc", EntryPoint = "munmap", SetLastError = true)]
+        internal static extern int MUnmap(IntPtr address, ulong length);
 
         internal static string Strerror(int error)
         {

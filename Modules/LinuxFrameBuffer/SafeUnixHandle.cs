@@ -1,4 +1,4 @@
-namespace Program
+namespace LinuxFrameBuffer
 {
     using System;
     using System.Runtime.ConstrainedExecution;
